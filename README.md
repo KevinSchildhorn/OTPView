@@ -1,7 +1,20 @@
 # OTPView
- Heavily customizable OTP or Pin View
+ Heavily customizable OTP or Pin View. **Note**:OTPView is still in early stages
+
+## Description
+
+OTPView is meant to be a highly customizable OTP / Pin View for android. It supports customization for text styling, background styling, and dimensional styling. It defines the view as 3 segments:
+* The Highlighted Item
+* The Empty Item
+* The filled Item
+
+Each type can be customized separately, with the empty item being the default.
 
 The OTPView also supports `android:inputType`.
+
+![IMG](/images/example.png)
+
+## Attributes
 
 | Attribute | Format | Description | Default |
 |-----------|--------|-------------|---------|
@@ -28,3 +41,22 @@ The OTPView also supports `android:inputType`.
 | otp_filledTextColor | integer | The text color of items before the cursor | otp_textColor |
 | otp_filledBackgroundImage | reference | The background image of items before the cursor| otp_backgroundImage |
 | otp_filledFont | reference | The font of items before the cursor | otp_Font |
+
+## API
+
+* `fun setOnFinishListener(func: (String) -> Unit)` - Simple listener callback for when all items have been filled
+```
+otp_view.setOnFinishListener {
+    Toast.makeText(this,it,Toast.LENGTH_LONG).show()
+}
+```
+* `fun setText(str:String)` - Fills in as much of the text into the items as possible, with one character for each item. Overflow characters are discarded
+
+* `fun clearText(showKeyboard: Boolean)` - Clears all the text, also has the option to hide or show the keyboard on the first item
+
+
+## What's next
+
+Next Steps:
+* support back presses on keyboard
+* support password
