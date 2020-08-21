@@ -57,6 +57,7 @@ class OTPView @JvmOverloads constructor(
     private val cursorColor:Int
     private val allCaps:Boolean
     private val marginBetween:Int
+    private val isPassword:Boolean
 
     // Default
 
@@ -102,6 +103,7 @@ class OTPView @JvmOverloads constructor(
                 cursorColor = getColor(R.styleable.OTPView_otp_cursorColor, Color.BLACK)
                 allCaps = getBoolean(R.styleable.OTPView_otp_allcaps, false)
                 marginBetween = getDimensionPixelSize(R.styleable.OTPView_otp_marginBetween, 8.dpTopx)
+                isPassword = getBoolean(R.styleable.OTPView_otp_ispassword, false)
 
                 textSizeDefault = getDimensionPixelSize(R.styleable.OTPView_otp_textSize, 14.dpTopx)
                 textColor = getInteger(R.styleable.OTPView_otp_textColor, Color.BLACK)

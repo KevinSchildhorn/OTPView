@@ -10,6 +10,7 @@
         <attr name="otp_cursorColor" format="color" />
         <attr name="otp_allcaps" format="boolean" />
         <attr name="otp_marginBetween" format="dimension" />
+        <attr name="otp_ispassword" format="boolean" />
 
         <attr name="otp_textSize" format="dimension" />
         <attr name="otp_textColor" format="integer" />

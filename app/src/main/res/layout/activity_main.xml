@@ -19,7 +19,6 @@
         app:otp_itemWidth="48sp"
         app:otp_itemHeight="56sp"
         app:otp_cursorColor="@color/colorPrimary"
-        app:otp_allcaps="true"
         app:otp_marginBetween="8dp"
         app:otp_textColor="@color/colorPrimary"
         app:otp_backgroundImage="@drawable/background"
