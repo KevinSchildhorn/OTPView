@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 29
@@ -29,6 +30,38 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'com.kevinschildhorn.otpview'
+                artifactId = 'otpview'
+                version = '1.0.0'
+
+                pom {
+                    name = 'OTP View'
+                    description = 'A very customizable otp or pin view for android'
+                    url = 'https://github.com/KevinSchildhorn/OTPView'
+                    licenses {
+                        license {
+                            name = 'MIT License'
+                            url = 'https://opensource.org/licenses/MIT'
+                        }
+                    }
+                }
+            }
+            debug(MavenPublication) {
+                from components.debug
+
+                groupId = 'com.kevinschildhorn.otpview'
+                artifactId = 'otpview-debug'
+                version = '1.0.0'
+            }
         }
     }
 }
