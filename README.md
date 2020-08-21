@@ -10,7 +10,7 @@ OTPView is meant to be a highly customizable OTP / Pin View for android. It supp
 
 Each type can be customized separately, with the empty item being the default.
 
-The OTPView also supports `android:inputType`.
+The OTPView also supports `android:inputType`, so you can easily set options like numbers/string, allcaps, etc.
 
 ![IMG](/images/example.png)
 
