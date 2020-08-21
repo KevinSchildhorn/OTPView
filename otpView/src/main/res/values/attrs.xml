@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="OTPView">
+        <attr name="android:inputType"/>
+
+        <attr name="otp_itemCount" format="integer" />
+        <attr name="otp_showCursor" format="boolean" />
+        <attr name="otp_itemWidth" format="dimension" />
+        <attr name="otp_itemHeight" format="dimension" />
+        <attr name="otp_cursorColor" format="color" />
+        <attr name="otp_allcaps" format="boolean" />
+        <attr name="otp_marginBetween" format="dimension" />
+
+        <attr name="otp_textSize" format="dimension" />
+        <attr name="otp_textColor" format="integer" />
+        <attr name="otp_backgroundImage" format="reference" />
+        <attr name="otp_Font" format="reference" />
+
+        <attr name="otp_highlightedTextSize" format="dimension" />
+        <attr name="otp_highlightedTextColor" format="integer" />
+        <attr name="otp_highlightedBackgroundImage" format="reference" />
+        <attr name="otp_highlightedFont" format="reference" />
+
+        <attr name="otp_filledTextSize" format="dimension" />
+        <attr name="otp_filledTextColor" format="integer" />
+        <attr name="otp_filledBackgroundImage" format="reference" />
+        <attr name="otp_filledFont" format="reference" />
+
+    </declare-styleable>
+</resources>

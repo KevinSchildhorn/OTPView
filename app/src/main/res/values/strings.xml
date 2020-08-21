@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">OtpView Sample</string>
+    <string name="fill_view">Fill View</string>
+</resources>

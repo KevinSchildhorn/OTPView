@@ -1,0 +1,3 @@
+include ':otpView'
+include ':app'
+rootProject.name = "OtpView Sample"

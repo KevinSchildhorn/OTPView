@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.kevinschildhorn.otpview.otpview.OTPView
+        android:id="@+id/otp_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textCapCharacters"
+        app:otp_itemCount="4"
+        app:otp_showCursor="true"
+        app:otp_textSize="24sp"
+        app:otp_highlightedTextSize="24sp"
+        app:otp_filledTextSize="24sp"
+        app:otp_itemWidth="48sp"
+        app:otp_itemHeight="56sp"
+        app:otp_cursorColor="@color/colorPrimary"
+        app:otp_allcaps="true"
+        app:otp_marginBetween="8dp"
+        app:otp_textColor="@color/colorPrimary"
+        app:otp_backgroundImage="@drawable/background"
+        app:otp_filledBackgroundImage="@drawable/background"
+        app:otp_highlightedBackgroundImage="@drawable/background_highlighted"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:id="@+id/fill_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fill_view"
+        app:layout_constraintBottom_toTopOf="@+id/otp_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
