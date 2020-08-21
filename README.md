@@ -10,7 +10,6 @@ The OTPView also supports `android:inputType`.
 | otp_itemWidth | dimension | width of each item | 44dp |
 | otp_itemHeight | dimension | height of each item | 44dp |
 | otp_cursorColor | color | color of the cursor | Black |
-| otp_allcaps | boolean | force the input to be all capital | false |
 | otp_marginBetween | dimension | margin between each item horizontally | 8dp |
 | otp_isPassword | boolean | sets previously entered items as hidden (NOT Implemented yet) | false |
 |  |  |  |  |
