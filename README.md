@@ -23,7 +23,7 @@ allprojects {
 }
 
 dependencies {
-implementation 'com.github.KevinSchildhorn:OTPView:0.0.2'
+    implementation 'com.github.KevinSchildhorn:OTPView:0.0.2'
 }
 ```
 
@@ -69,10 +69,3 @@ otp_view.setOnFinishListener {
 * `fun setText(str:String)` - Fills in as much of the text into the items as possible, with one character for each item. Overflow characters are discarded
 
 * `fun clearText(showKeyboard: Boolean)` - Clears all the text, also has the option to hide or show the keyboard on the first item
-
-
-## What's next
-
-Next Steps:
-* support back presses on keyboard
-* support password
