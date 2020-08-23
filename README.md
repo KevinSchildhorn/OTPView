@@ -12,6 +12,22 @@ Each type can be customized separately, with the empty item being the default.
 
 The OTPView also supports `android:inputType`, so you can easily set options like numbers/string, allcaps, etc.
 
+## Install
+
+```
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+dependencies {
+implementation 'com.github.KevinSchildhorn:OTPView:0.0.1'
+}
+```
+
+
 ![IMG](/images/example.png)
 
 ## Attributes
