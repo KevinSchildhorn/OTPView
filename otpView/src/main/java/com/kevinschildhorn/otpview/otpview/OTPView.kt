@@ -179,6 +179,11 @@ class OTPView @JvmOverloads constructor(
             focusIndex = index
             styleEditTexts()
         }
+        if(isPassword) {
+            editTexts.forEach {
+                it.transformationMethod = AsteriskPasswordTransformationMethod()
+            }
+        }
     }
 
     private fun changeFocus(increment:Boolean){
@@ -343,7 +348,7 @@ class OTPView @JvmOverloads constructor(
 
 class AsteriskPasswordTransformationMethod : PasswordTransformationMethod() {
     override fun getTransformation(source: CharSequence?, view: View?): CharSequence {
-        return PasswordCharSequence(source)
+        return PasswordCharSequence(source!!)
     }
 }
 
@@ -352,7 +357,7 @@ private class PasswordCharSequence(private var mSource:CharSequence) : CharSeque
     override val length: Int
         get() = mSource.length
 
-    override fun get(index: Int): Char = 'x'
+    override fun get(index: Int): Char = '*'
 
     override fun subSequence(startIndex: Int, endIndex: Int): CharSequence =
         mSource.subSequence(startIndex, endIndex)
