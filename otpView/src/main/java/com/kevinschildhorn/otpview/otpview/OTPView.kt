@@ -154,7 +154,10 @@ class OTPView @JvmOverloads constructor(
                 // Only Taking the last char
                 if (editTexts[index].text.length > 1) {
                     editTexts[index].setText(it?.first().toString() ?: "")
-                } else {
+                } else if (editTexts[index].text.length == 0){
+                    changeFocus(false)
+                }
+                else {
                     changeFocus(true)
                 }
             }
@@ -169,6 +172,10 @@ class OTPView @JvmOverloads constructor(
                 disableEditListener = false
             }
             return@setOnKeyListener false
+        }
+        editTexts[index].setOnFocusChangeListener { v, hasFocus ->
+            focusIndex = index
+            styleEditTexts()
         }
     }
 
