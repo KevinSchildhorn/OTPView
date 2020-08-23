@@ -33,6 +33,7 @@ import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -153,26 +154,50 @@ class OTPView @JvmOverloads constructor(
                 // Only Taking the last char
                 if (editTexts[index].text.length > 1) {
                     editTexts[index].setText(it?.first().toString() ?: "")
-                } else {
-                    focusIndex = index + 1
-                    if (index + 1 < editTexts.size) {
-                        // Change focus to next edit text
-                        editTexts[focusIndex].requestFocus()
-                    } else {
-                        // Clear all focus and hide keyboard
-                        var str = ""
-                        editTexts.forEach {
-                            str += it.text.first()
-                            it.clearFocus()
-                        }
-                        showKeyboard(false,editTexts.last())
-
-                        onFinishFunction(str)
-                    }
-                    styleEditTexts()
+                } else if (editTexts[index].text.length == 0){
+                    changeFocus(false)
+                }
+                else {
+                    changeFocus(true)
                 }
             }
         }
+        editTexts[index].setOnKeyListener { v, keyCode, event ->
+            if(keyCode == KeyEvent.KEYCODE_DEL) {
+                disableEditListener = true
+                editTexts[index].setText("")
+                changeFocus(false)
+                if(index-1 >= 0)
+                    editTexts[index-1].setText("")
+                disableEditListener = false
+            }
+            return@setOnKeyListener false
+        }
+        editTexts[index].setOnFocusChangeListener { v, hasFocus ->
+            focusIndex = index
+            styleEditTexts()
+        }
+    }
+
+    private fun changeFocus(increment:Boolean){
+        if(increment) focusIndex++ else focusIndex--
+
+        when {
+            focusIndex < 0 -> focusIndex = 0
+            focusIndex < editTexts.size -> {
+                editTexts[focusIndex].requestFocus()
+            }
+            else -> {
+                var str = ""
+                editTexts.forEach {
+                    str += it.text.firstOrNull()
+                    it.clearFocus()
+                }
+                showKeyboard(false,editTexts.last())
+                onFinishFunction(str)
+            }
+        }
+        styleEditTexts()
     }
 
     private fun addEditText(){
