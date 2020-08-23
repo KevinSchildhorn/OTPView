@@ -30,10 +30,12 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -312,4 +314,21 @@ class OTPView @JvmOverloads constructor(
         disableEditListener = false
         showKeyboard(showKeyboard, editTexts[focusIndex])
     }
+}
+
+class AsteriskPasswordTransformationMethod : PasswordTransformationMethod() {
+    override fun getTransformation(source: CharSequence?, view: View?): CharSequence {
+        return PasswordCharSequence(source)
+    }
+}
+
+private class PasswordCharSequence(private var mSource:CharSequence) : CharSequence {
+
+    override val length: Int
+        get() = mSource.length
+
+    override fun get(index: Int): Char = 'x'
+
+    override fun subSequence(startIndex: Int, endIndex: Int): CharSequence =
+        mSource.subSequence(startIndex, endIndex)
 }
