@@ -23,7 +23,7 @@ allprojects {
 }
 
 dependencies {
-implementation 'com.github.KevinSchildhorn:OTPView:0.0.1'
+implementation 'com.github.KevinSchildhorn:OTPView:0.0.2'
 }
 ```
 
@@ -41,7 +41,7 @@ implementation 'com.github.KevinSchildhorn:OTPView:0.0.1'
 | otp_cursorColor | color | color of the cursor | Black |
 | otp_allcaps | boolean | all caps(if fails set input type) | false |
 | otp_marginBetween | dimension | margin between each item horizontally | 8dp |
-| otp_isPassword | boolean | sets previously entered items as hidden (NOT Implemented yet) | false |
+| otp_isPassword | boolean | sets previously entered items as hidden | false |
 |  |  |  |  |
 | otp_textSize | dimension | The text size of items past the cursor | 14dp |
 | otp_textColor | integer | The text color of items past the cursor | Black |
