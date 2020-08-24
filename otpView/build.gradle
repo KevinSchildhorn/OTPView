@@ -20,7 +20,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 29
         versionCode 3
-        versionName "0.0.3"
+        versionName "0.0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -41,7 +41,7 @@ afterEvaluate {
 
                 groupId = 'com.kevinschildhorn.otpview'
                 artifactId = 'otpview'
-                version = '0.0.3'
+                version = '0.0.5'
 
                 pom {
                     name = 'OTP View'
@@ -60,7 +60,7 @@ afterEvaluate {
 
                 groupId = 'com.kevinschildhorn.otpview'
                 artifactId = 'otpview-debug'
-                version = '0.0.3'
+                version = '0.0.5'
             }
         }
     }

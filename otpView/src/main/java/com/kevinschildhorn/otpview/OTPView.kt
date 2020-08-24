@@ -144,10 +144,10 @@ class OTPView @JvmOverloads constructor(
         styleEditTexts()
         val et = editTexts[0]
         et.postDelayed(Runnable {
-            val et = editTexts[focusIndex]
-            et.requestFocus()
+            val editText = editTexts[focusIndex]
+            editText.requestFocus()
             styleEditTexts()
-            showKeyboard(true, et)
+            showKeyboard(true, editText)
         }, 100)
     }
 
@@ -156,7 +156,7 @@ class OTPView @JvmOverloads constructor(
             if(!disableEditListener) {
                 // Only Taking the last char
                 if (editTexts[index].text.length > 1) {
-                    editTexts[index].setText(it?.first().toString() ?: "")
+                    editTexts[index].setText(it?.first().toString())
                 } else if (editTexts[index].text.length == 0){
                     changeFocus(false)
                 }
@@ -165,7 +165,7 @@ class OTPView @JvmOverloads constructor(
                 }
             }
         }
-        editTexts[index].setOnKeyListener { v, keyCode, event ->
+        editTexts[index].setOnKeyListener { _, keyCode, _ ->
             if(keyCode == KeyEvent.KEYCODE_DEL) {
                 disableEditListener = true
                 editTexts[index].setText("")
@@ -176,7 +176,7 @@ class OTPView @JvmOverloads constructor(
             }
             return@setOnKeyListener false
         }
-        editTexts[index].setOnFocusChangeListener { v, hasFocus ->
+        editTexts[index].setOnFocusChangeListener { _, _ ->
             focusIndex = index
             styleEditTexts()
         }
@@ -235,7 +235,7 @@ class OTPView @JvmOverloads constructor(
         // Default
         styleDefault(et)
 
-        et.setOnFocusChangeListener { v, hasFocus ->
+        et.setOnFocusChangeListener { _, hasFocus ->
             if(hasFocus){
                 et.post(Runnable { et.setSelection(0) })
             }
@@ -348,7 +348,7 @@ class OTPView @JvmOverloads constructor(
     }
 }
 
-class AsteriskPasswordTransformationMethod : PasswordTransformationMethod() {
+private class AsteriskPasswordTransformationMethod : PasswordTransformationMethod() {
     override fun getTransformation(source: CharSequence?, view: View?): CharSequence {
         return PasswordCharSequence(source!!)
     }
