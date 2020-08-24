@@ -20,7 +20,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 29
         versionCode 8
-        versionName "0.0.8"
+        versionName "0.0.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -30,6 +30,32 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'com.kevinschildhorn.otpview'
+                artifactId = 'otpview'
+                version = '0.0.9'
+
+                pom {
+                    name = 'OTP View'
+                    description = 'A very customizable otp or pin view for android'
+                    url = 'https://github.com/KevinSchildhorn/OTPView'
+                    licenses {
+                        license {
+                            name = 'MIT License'
+                            url = 'https://opensource.org/licenses/MIT'
+                        }
+                    }
+                }
+            }
         }
     }
 }
