@@ -1,4 +1,6 @@
 # OTPView
+[![](https://jitpack.io/v/KevinSchildhorn/OTPView.svg)](https://jitpack.io/#KevinSchildhorn/OTPView)
+
  Heavily customizable OTP or Pin View. **Note**:OTPView is still in early stages
 
 ## Description
@@ -23,7 +25,7 @@ allprojects {
 }
 
 dependencies {
-implementation 'com.github.KevinSchildhorn:OTPView:0.1'
+implementation 'com.github.KevinSchildhorn:OTPView:0.1.1'
 }
 ```
 
