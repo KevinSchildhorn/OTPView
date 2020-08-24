@@ -19,8 +19,8 @@ android {
     defaultConfig {
         minSdkVersion 26
         targetSdkVersion 29
-        versionCode 2
-        versionName "0.0.2"
+        versionCode 3
+        versionName "0.0.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -41,7 +41,7 @@ afterEvaluate {
 
                 groupId = 'com.kevinschildhorn.otpview'
                 artifactId = 'otpview'
-                version = '0.0.1'
+                version = '0.0.3'
 
                 pom {
                     name = 'OTP View'
@@ -60,7 +60,7 @@ afterEvaluate {
 
                 groupId = 'com.kevinschildhorn.otpview'
                 artifactId = 'otpview-debug'
-                version = '0.0.2'
+                version = '0.0.3'
             }
         }
     }

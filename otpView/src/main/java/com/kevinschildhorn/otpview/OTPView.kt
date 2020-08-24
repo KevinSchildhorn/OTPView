@@ -22,7 +22,7 @@
     SOFTWARE.
  */
 
-package com.kevinschildhorn.otpview.otpview
+package com.kevinschildhorn.otpview
 
 import android.content.Context
 import android.content.res.Resources
@@ -41,6 +41,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.core.widget.addTextChangedListener
+import com.kevinschildhorn.otpview.otpview.R
 import kotlinx.android.synthetic.main.otp_view_layout.view.*
 
 
@@ -181,7 +182,8 @@ class OTPView @JvmOverloads constructor(
         }
         if(isPassword) {
             editTexts.forEach {
-                it.transformationMethod = AsteriskPasswordTransformationMethod()
+                it.transformationMethod =
+                    AsteriskPasswordTransformationMethod()
             }
         }
     }

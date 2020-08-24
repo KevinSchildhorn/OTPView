@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.kevinschildhorn.otpview.otpview.OTPView
+    <com.kevinschildhorn.otpview.OTPView
         android:id="@+id/otp_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
