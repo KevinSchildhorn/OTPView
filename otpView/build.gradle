@@ -20,7 +20,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 29
         versionCode 10
-        versionName "0.1.1"
+        versionName "0.1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -40,7 +40,7 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
                 groupId = 'com.kevinschildhorn.otpview'
-                version = '0.1.1'
+                version = '0.1.2'
             }
         }
     }

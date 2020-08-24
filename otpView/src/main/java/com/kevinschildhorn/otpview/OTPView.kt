@@ -154,19 +154,23 @@ class OTPView @JvmOverloads constructor(
     private fun addListenerForIndex(index:Int){
         editTexts[index].addTextChangedListener {
             if(!disableEditListener) {
-                // Only Taking the last char
-                if (editTexts[index].text.length > 1) {
-                    editTexts[index].setText(it?.first().toString())
-                } else if (editTexts[index].text.length == 0){
-                    changeFocus(false)
-                }
-                else {
-                    changeFocus(true)
+                when {
+                    editTexts[index].text.isEmpty() -> {
+                        changeFocus(false)
+                    }
+                    editTexts[index].text.length > 1 -> {
+                        // Only Taking the last char
+                        editTexts[index].setText(it?.first().toString())
+                    }
+                    else -> {
+                        changeFocus(true)
+                    }
                 }
             }
         }
-        editTexts[index].setOnKeyListener { _, keyCode, _ ->
-            if(keyCode == KeyEvent.KEYCODE_DEL) {
+        editTexts[index].setOnKeyListener { _, keyCode, event ->
+            if(keyCode == KeyEvent.KEYCODE_DEL &&
+                event.action == KeyEvent.ACTION_DOWN) {
                 disableEditListener = true
                 editTexts[index].setText("")
                 changeFocus(false)

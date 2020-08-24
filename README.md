@@ -25,7 +25,7 @@ allprojects {
 }
 
 dependencies {
-implementation 'com.github.KevinSchildhorn:OTPView:0.1.1'
+implementation 'com.github.KevinSchildhorn:OTPView:0.1.2'
 }
 ```
 
