@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textCapCharacters"
-        app:otp_itemCount="4"
+        app:otp_itemCount="6"
         app:otp_showCursor="true"
         app:otp_textSize="24sp"
         app:otp_highlightedTextSize="24sp"

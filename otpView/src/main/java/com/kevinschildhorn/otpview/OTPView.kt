@@ -137,7 +137,7 @@ class OTPView @JvmOverloads constructor(
 
     private fun initEditTexts(){
         for(x in 0 until itemCount){
-            addEditText()
+            addEditText(x)
             addListenerForIndex(x)
         }
 
@@ -213,7 +213,7 @@ class OTPView @JvmOverloads constructor(
         styleEditTexts()
     }
 
-    private fun addEditText(){
+    private fun addEditText(index:Int){
         val et = EditText(context)
 
         // All
@@ -226,8 +226,11 @@ class OTPView @JvmOverloads constructor(
         )
 
         et.isAllCaps = allCaps
+
+        val leftDp = if(index == 0) 8.dpTopx else 0.dpTopx
+
         params.setMargins(
-            0,
+            leftDp,
             8.dpTopx,
             marginBetween,
             8.dpTopx
