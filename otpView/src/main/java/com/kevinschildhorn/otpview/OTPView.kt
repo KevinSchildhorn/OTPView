@@ -52,6 +52,7 @@ class OTPView @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : LinearLayout(context, attrs, defStyle, defStyleRes) {
 
+    // region values
     // All
     private val itemCount:Int
     private val showCursor:Boolean
@@ -84,7 +85,7 @@ class OTPView @JvmOverloads constructor(
     private val filledBackgroundImage:Drawable?
     private val filledFont:Typeface?
 
-
+    // endregion
 
     private var onFinishFunction: ((String) -> Unit) = {}
     private val editTexts:MutableList<EditText> = mutableListOf()
@@ -133,7 +134,7 @@ class OTPView @JvmOverloads constructor(
 
     private var disableEditListener:Boolean = false
 
-    // Init
+    // region Init
 
     private fun initEditTexts(){
         for(x in 0 until itemCount){
@@ -180,9 +181,14 @@ class OTPView @JvmOverloads constructor(
             }
             return@setOnKeyListener false
         }
-        editTexts[index].setOnFocusChangeListener { _, _ ->
-            focusIndex = index
+        editTexts[index].setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus)
+                focusIndex = index
             styleEditTexts()
+            v.post(Runnable {
+                if(focusIndex < editTexts.size)
+                    editTexts[focusIndex].setSelection(0)
+            })
         }
         if(isPassword) {
             editTexts.forEach {
@@ -199,15 +205,15 @@ class OTPView @JvmOverloads constructor(
             focusIndex < 0 -> focusIndex = 0
             focusIndex < editTexts.size -> {
                 editTexts[focusIndex].requestFocus()
+                if(isEverythingFilled())
+                    onFinishFunction(getStringFromFields())
             }
             else -> {
-                var str = ""
                 editTexts.forEach {
-                    str += it.text.firstOrNull()
                     it.clearFocus()
                 }
                 showKeyboard(false,editTexts.last())
-                onFinishFunction(str)
+                onFinishFunction(getStringFromFields())
             }
         }
         styleEditTexts()
@@ -252,8 +258,9 @@ class OTPView @JvmOverloads constructor(
         otp_wrapper.addView(et)
     }
 
+    // endregion
 
-    // Styling
+    // region Styling
 
     private fun styleEditTexts(){
         for (x in 0 until editTexts.size){
@@ -289,8 +296,9 @@ class OTPView @JvmOverloads constructor(
         editText.typeface = filledFont
     }
 
+    // endregion
 
-    // Utility
+    // region Utility
 
     private val Int.dpTopx: Int
         get() = (this * Resources.getSystem().displayMetrics.density).toInt()
@@ -314,7 +322,24 @@ class OTPView @JvmOverloads constructor(
         }
     }
 
-    // Public
+    private fun isEverythingFilled(): Boolean{
+        editTexts.forEach {
+            if(it.text.isEmpty()) return false
+        }
+        return true
+    }
+
+    private fun getStringFromFields():String {
+        var str = ""
+        editTexts.forEach {
+            str += it.text.firstOrNull()
+        }
+        return str
+    }
+
+    // endregion
+
+    // region Public
 
     fun setOnFinishListener(func: (String) -> Unit) {
         onFinishFunction = func
@@ -353,6 +378,8 @@ class OTPView @JvmOverloads constructor(
         disableEditListener = false
         showKeyboard(showKeyboard, editTexts[focusIndex])
     }
+
+    // endregion
 }
 
 private class AsteriskPasswordTransformationMethod : PasswordTransformationMethod() {
