@@ -37,9 +37,11 @@ import android.view.Gravity
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnKeyListener
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import com.kevinschildhorn.otpview.otpview.R
 import kotlinx.android.synthetic.main.otp_view_layout.view.*
@@ -179,6 +181,11 @@ class OTPView @JvmOverloads constructor(
                     editTexts[index-1].setText("")
                 disableEditListener = false
             }
+            if (event.action == KeyEvent.ACTION_DOWN &&
+                keyCode == KeyEvent.KEYCODE_ENTER) {
+                if(isEverythingFilled())
+                    onFinishFunction(getStringFromFields())
+            }
             return@setOnKeyListener false
         }
         editTexts[index].setOnFocusChangeListener { v, hasFocus ->
@@ -190,6 +197,7 @@ class OTPView @JvmOverloads constructor(
                     editTexts[focusIndex].setSelection(0)
             })
         }
+
         if(isPassword) {
             editTexts.forEach {
                 it.transformationMethod =
@@ -205,8 +213,6 @@ class OTPView @JvmOverloads constructor(
             focusIndex < 0 -> focusIndex = 0
             focusIndex < editTexts.size -> {
                 editTexts[focusIndex].requestFocus()
-                if(isEverythingFilled())
-                    onFinishFunction(getStringFromFields())
             }
             else -> {
                 editTexts.forEach {
