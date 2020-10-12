@@ -71,3 +71,5 @@ otp_view.setOnFinishListener {
 * `fun setText(str:String)` - Fills in as much of the text into the items as possible, with one character for each item. Overflow characters are discarded
 
 * `fun clearText(showKeyboard: Boolean)` - Clears all the text, also has the option to hide or show the keyboard on the first item
+
+* `fun fitToWidth(width: Int)` - Fits the entire view to the width entered. Made so that you can dynamically resize the view.
