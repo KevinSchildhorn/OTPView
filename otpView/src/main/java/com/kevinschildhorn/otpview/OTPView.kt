@@ -32,16 +32,15 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
+import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnKeyListener
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import com.kevinschildhorn.otpview.otpview.R
 import kotlinx.android.synthetic.main.otp_view_layout.view.*
@@ -59,8 +58,8 @@ class OTPView @JvmOverloads constructor(
     private val itemCount:Int
     private val showCursor:Boolean
     private val inputType:Int
-    private val itemWidth:Int
-    private val itemHeight:Int
+    private var itemWidth:Int
+    private var itemHeight:Int
     private val cursorColor:Int
     private val allCaps:Boolean
     private val marginBetween:Int
@@ -99,7 +98,8 @@ class OTPView @JvmOverloads constructor(
         context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.OTPView,
-            0, 0)
+            0, 0
+        )
         .apply {
             try {
                 itemCount = getInteger(R.styleable.OTPView_otp_itemCount, 1)
@@ -109,7 +109,10 @@ class OTPView @JvmOverloads constructor(
                 itemHeight = getDimensionPixelSize(R.styleable.OTPView_otp_itemHeight, 44)
                 cursorColor = getColor(R.styleable.OTPView_otp_cursorColor, Color.BLACK)
                 allCaps = getBoolean(R.styleable.OTPView_otp_allcaps, false)
-                marginBetween = getDimensionPixelSize(R.styleable.OTPView_otp_marginBetween, 8.dpTopx)
+                marginBetween = getDimensionPixelSize(
+                    R.styleable.OTPView_otp_marginBetween,
+                    8.dpTopx
+                )
                 isPassword = getBoolean(R.styleable.OTPView_otp_ispassword, false)
 
                 textSizeDefault = getDimensionPixelSize(R.styleable.OTPView_otp_textSize, 14.dpTopx)
@@ -117,12 +120,21 @@ class OTPView @JvmOverloads constructor(
                 backgroundImage = getDrawable(R.styleable.OTPView_otp_backgroundImage) ?: customBackground()
                 font = getFont(R.styleable.OTPView_otp_Font)
 
-                highlightedTextSize = getDimensionPixelSize(R.styleable.OTPView_otp_highlightedTextSize, textSizeDefault)
-                highlightedTextColor = getInteger(R.styleable.OTPView_otp_highlightedTextColor, textColor)
+                highlightedTextSize = getDimensionPixelSize(
+                    R.styleable.OTPView_otp_highlightedTextSize,
+                    textSizeDefault
+                )
+                highlightedTextColor = getInteger(
+                    R.styleable.OTPView_otp_highlightedTextColor,
+                    textColor
+                )
                 highlightedBackgroundImage = getDrawable(R.styleable.OTPView_otp_highlightedBackgroundImage) ?: backgroundImage
                 highlightedFont = getFont(R.styleable.OTPView_otp_highlightedFont) ?: font
 
-                filledTextSize = getDimensionPixelSize(R.styleable.OTPView_otp_filledTextSize, textSizeDefault)
+                filledTextSize = getDimensionPixelSize(
+                    R.styleable.OTPView_otp_filledTextSize,
+                    textSizeDefault
+                )
                 filledTextColor = getInteger(R.styleable.OTPView_otp_filledTextColor, textColor)
                 filledBackgroundImage = getDrawable(R.styleable.OTPView_otp_filledBackgroundImage) ?: backgroundImage
                 filledFont = getFont(R.styleable.OTPView_otp_filledFont) ?: font
@@ -154,7 +166,7 @@ class OTPView @JvmOverloads constructor(
         }, 100)
     }
 
-    private fun addListenerForIndex(index:Int){
+    private fun addListenerForIndex(index: Int){
         editTexts[index].addTextChangedListener {
             if(!disableEditListener) {
                 when {
@@ -178,7 +190,7 @@ class OTPView @JvmOverloads constructor(
                 editTexts[index].setText("")
                 changeFocus(false)
                 if(index-1 >= 0)
-                    editTexts[index-1].setText("")
+                    editTexts[index - 1].setText("")
                 disableEditListener = false
             }
             if (event.action == KeyEvent.ACTION_DOWN &&
@@ -193,7 +205,7 @@ class OTPView @JvmOverloads constructor(
                 focusIndex = index
             styleEditTexts()
             v.post(Runnable {
-                if(focusIndex < editTexts.size)
+                if (focusIndex < editTexts.size)
                     editTexts[focusIndex].setSelection(0)
             })
         }
@@ -206,7 +218,7 @@ class OTPView @JvmOverloads constructor(
         }
     }
 
-    private fun changeFocus(increment:Boolean){
+    private fun changeFocus(increment: Boolean){
         if(increment) focusIndex++ else focusIndex--
 
         when {
@@ -218,14 +230,14 @@ class OTPView @JvmOverloads constructor(
                 editTexts.forEach {
                     it.clearFocus()
                 }
-                showKeyboard(false,editTexts.last())
+                showKeyboard(false, editTexts.last())
                 onFinishFunction(getStringFromFields())
             }
         }
         styleEditTexts()
     }
 
-    private fun addEditText(index:Int){
+    private fun addEditText(index: Int){
         val et = EditText(context)
 
         // All
@@ -318,7 +330,7 @@ class OTPView @JvmOverloads constructor(
         return shape
     }
 
-    private fun showKeyboard(show:Boolean, editText: EditText){
+    private fun showKeyboard(show: Boolean, editText: EditText){
 
         val imm: InputMethodManager? = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         if(show){
@@ -330,7 +342,7 @@ class OTPView @JvmOverloads constructor(
 
     private fun isEverythingFilled(): Boolean{
         editTexts.forEach {
-            if(it.text.isEmpty()) return false
+            if(it.text.isNullOrBlank()) return false
         }
         return true
     }
@@ -351,7 +363,7 @@ class OTPView @JvmOverloads constructor(
         onFinishFunction = func
     }
 
-    fun setText(str:String){
+    fun setText(str: String){
         disableEditListener = true
         for(x in 0 until editTexts.size){
             if(x < str.length){
@@ -385,6 +397,31 @@ class OTPView @JvmOverloads constructor(
         showKeyboard(showKeyboard, editTexts[focusIndex])
     }
 
+    fun fitToWidth(width:Int){
+        val outerMargin = 8.dpTopx
+        var dividedSpace = (width - (outerMargin*2)) / editTexts.size
+        dividedSpace -= marginBetween
+        itemWidth = dividedSpace
+        itemHeight = (itemWidth * 1.25f).toInt()
+
+        val params = LayoutParams(
+            itemWidth,
+            itemHeight
+        )
+
+        editTexts.forEachIndexed { index, editText ->
+            val leftDp = if(index == 0) 8.dpTopx else 0.dpTopx
+
+            params.setMargins(
+                leftDp,
+                8.dpTopx,
+                marginBetween,
+                8.dpTopx
+            )
+            editText.layoutParams = params
+        }
+    }
+
     // endregion
 }
 
@@ -394,7 +431,7 @@ private class AsteriskPasswordTransformationMethod : PasswordTransformationMetho
     }
 }
 
-private class PasswordCharSequence(private var mSource:CharSequence) : CharSequence {
+private class PasswordCharSequence(private var mSource: CharSequence) : CharSequence {
 
     override val length: Int
         get() = mSource.length
