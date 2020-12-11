@@ -73,3 +73,5 @@ otp_view.setOnFinishListener {
 * `fun clearText(showKeyboard: Boolean)` - Clears all the text, also has the option to hide or show the keyboard on the first item
 
 * `fun fitToWidth(width: Int)` - Fits the entire view to the width entered. Made so that you can dynamically resize the view.
+
+* `override fun setEnabled(enabled: Boolean)` - Allows you to disable the view as you normally would.
