@@ -68,7 +68,7 @@ otp_view.setOnFinishListener {
     Toast.makeText(this,it,Toast.LENGTH_LONG).show()
 }
 ```
-* `fun onCharacterUpdatedFunction(func: (Boolean) -> Unit)` - listener callback for when a character was updated. Returns whether or not it was filled.
+* `fun setOnCharacterUpdatedListener(func: (Boolean) -> Unit)` - listener callback for when a character was updated. Returns whether or not it was filled.
 * `fun setText(str:String)` - Fills in as much of the text into the items as possible, with one character for each item. Overflow characters are discarded
 
 * `fun clearText(showKeyboard: Boolean)` - Clears all the text, also has the option to hide or show the keyboard on the first item
