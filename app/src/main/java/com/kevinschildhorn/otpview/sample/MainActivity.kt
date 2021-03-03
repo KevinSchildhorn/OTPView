@@ -17,6 +17,14 @@ class MainActivity : AppCompatActivity() {
             Log.i("MainActivity", it)
             Toast.makeText(this, it, Toast.LENGTH_LONG).show()
         }
+        otp_view.setOnCharacterUpdatedListener {
+            if(it)
+                Log.i("MainActivity", "The view is filled")
+            else
+                Log.i("MainActivity", "The view is NOT Filled")
+
+            //otp_view.isFilled()
+        }
 
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)

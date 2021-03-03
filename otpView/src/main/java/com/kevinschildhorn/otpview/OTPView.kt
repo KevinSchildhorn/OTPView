@@ -89,6 +89,8 @@ class OTPView @JvmOverloads constructor(
     // endregion
 
     private var onFinishFunction: ((String) -> Unit) = {}
+    private var onCharacterUpdatedFunction: ((Boolean) -> Unit) = {}
+
     private val editTexts:MutableList<EditText> = mutableListOf()
     private var focusIndex = 0
 
@@ -201,7 +203,7 @@ class OTPView @JvmOverloads constructor(
             }
             if (event.action == KeyEvent.ACTION_DOWN &&
                 keyCode == KeyEvent.KEYCODE_ENTER) {
-                if(isEverythingFilled())
+                if(isFilled())
                     onFinishFunction(getStringFromFields())
             }
             return@setOnKeyListener false
@@ -240,6 +242,7 @@ class OTPView @JvmOverloads constructor(
                 onFinishFunction(getStringFromFields())
             }
         }
+        onCharacterUpdatedFunction(isFilled())
         styleEditTexts()
     }
 
@@ -346,7 +349,7 @@ class OTPView @JvmOverloads constructor(
         }
     }
 
-    private fun isEverythingFilled(): Boolean{
+    fun isFilled(): Boolean{
         editTexts.forEach {
             if(it.text.isNullOrBlank()) return false
         }
@@ -367,6 +370,10 @@ class OTPView @JvmOverloads constructor(
 
     fun setOnFinishListener(func: (String) -> Unit) {
         onFinishFunction = func
+    }
+
+    fun setOnCharacterUpdatedListener(func: (Boolean) -> Unit) {
+        onCharacterUpdatedFunction = func
     }
 
     fun setText(str: String){
