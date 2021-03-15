@@ -177,13 +177,7 @@ class OTPView @JvmOverloads constructor(
                     }
                     editTexts[index].text.length > 1 -> {
                         // Only Taking the last char
-                        //editTexts[index].setText(it?.first().toString())
-                        var tempIndex = index
-                        it?.forEach { chr ->
-                            if(tempIndex < editTexts.count())
-                            editTexts[tempIndex].setText(chr.toString())
-                            tempIndex++
-                        }
+                        editTexts[index].setText(it?.first().toString())
                     }
                     else -> {
                         changeFocus(true)
