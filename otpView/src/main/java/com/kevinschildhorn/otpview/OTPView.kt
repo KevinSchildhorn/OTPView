@@ -191,8 +191,8 @@ class OTPView @JvmOverloads constructor(
                 disableEditListener = true
                 editTexts[index].setText("")
                 changeFocus(false)
-                if(index-1 >= 0)
-                    editTexts[index - 1].setText("")
+                //if(index-1 >= 0)
+                //editTexts[index - 1].setText("")
                 disableEditListener = false
             }
             if (event.action == KeyEvent.ACTION_DOWN &&
