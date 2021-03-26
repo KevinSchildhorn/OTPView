@@ -30,6 +30,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.os.Build
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.util.DisplayMetrics
@@ -58,6 +59,8 @@ class OTPView @JvmOverloads constructor(
     private val itemCount:Int
     private val showCursor:Boolean
     private val inputType:Int
+    private val importantForAutofillLocal:Int
+    private val autofillHints:String?
     private var itemWidth:Int
     private var itemHeight:Int
     private val cursorColor:Int
@@ -107,6 +110,8 @@ class OTPView @JvmOverloads constructor(
                 itemCount = getInteger(R.styleable.OTPView_otp_itemCount, 1)
                 showCursor = getBoolean(R.styleable.OTPView_otp_showCursor, false)
                 inputType = getInteger(R.styleable.OTPView_android_inputType, 0)
+                importantForAutofillLocal = getInteger(R.styleable.OTPView_android_importantForAutofill, 0)
+                autofillHints = getString(R.styleable.OTPView_android_autofillHints)
                 itemWidth = getDimensionPixelSize(R.styleable.OTPView_otp_itemWidth, 44)
                 itemHeight = getDimensionPixelSize(R.styleable.OTPView_otp_itemHeight, 44)
                 cursorColor = getColor(R.styleable.OTPView_otp_cursorColor, Color.BLACK)
@@ -247,6 +252,10 @@ class OTPView @JvmOverloads constructor(
 
         et.isCursorVisible = showCursor
         et.inputType = inputType
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            et.importantForAutofill = importantForAutofillLocal
+            et.setAutofillHints(autofillHints)
+        }
         val params = LayoutParams(
             itemWidth,
             itemHeight

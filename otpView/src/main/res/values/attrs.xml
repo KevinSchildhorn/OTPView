@@ -2,7 +2,8 @@
 <resources>
     <declare-styleable name="OTPView">
         <attr name="android:inputType"/>
-
+        <attr name="android:importantForAutofill"/>
+        <attr name="android:autofillHints"/>
         <attr name="otp_itemCount" format="integer" />
         <attr name="otp_showCursor" format="boolean" />
         <attr name="otp_itemWidth" format="dimension" />

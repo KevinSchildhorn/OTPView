@@ -12,7 +12,7 @@ OTPView is meant to be a highly customizable OTP / Pin View for android. It supp
 
 Each type can be customized separately, with the empty item being the default.
 
-The OTPView also supports `android:inputType`, so you can easily set options like numbers/string, allcaps, etc.
+The OTPView also supports some android standards such as `android:inputType`, `android:importantForAutofill` and `android:autofillHints` so you can easily set options like numbers/string, allcaps, etc.
 
 ## Install
 
@@ -25,7 +25,7 @@ allprojects {
 }
 
 dependencies {
-implementation 'com.github.KevinSchildhorn:OTPView:0.1.9'
+implementation 'com.github.KevinSchildhorn:OTPView:0.2.0'
 }
 ```
 
