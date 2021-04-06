@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">OtpView Sample</string>
     <string name="fill_view">Fill View</string>
+    <string name="continue_text">Continue</string>
 </resources>

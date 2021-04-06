@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity", "The view is filled")
             else
                 Log.i("MainActivity", "The view is NOT Filled")
-
+            continue_button.isEnabled = it
             //otp_view.isFilled()
         }
 
