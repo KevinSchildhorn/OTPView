@@ -24,3 +24,8 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+project.ext {
+    versionCode = 21
+    versionName = "0.2.1"
+}
