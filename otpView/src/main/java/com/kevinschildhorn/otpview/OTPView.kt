@@ -238,7 +238,8 @@ class OTPView @JvmOverloads constructor(
                     it.clearFocus()
                 }
                 showKeyboard(false, editTexts.last())
-                onFinishFunction(getStringFromFields())
+                if(isFilled())
+                    onFinishFunction(getStringFromFields())
             }
         }
         onCharacterUpdatedFunction(isFilled())
