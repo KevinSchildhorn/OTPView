@@ -25,7 +25,7 @@ allprojects {
 }
 
 dependencies {
-implementation 'com.github.KevinSchildhorn:OTPView:0.2.1'
+implementation 'com.github.KevinSchildhorn:OTPView:0.2.2'
 }
 ```
 
@@ -75,4 +75,5 @@ otp_view.setOnFinishListener {
 
 * `fun fitToWidth(width: Int)` - Fits the entire view to the width entered. Made so that you can dynamically resize the view.
 * `fun isFilled(): Boolean` - Returns whether or not all the fields have been filled.
+* `fun getStringFromFields(): String` - Returns the string from the view.
 * `override fun setEnabled(enabled: Boolean)` - Allows you to disable the view as you normally would.
