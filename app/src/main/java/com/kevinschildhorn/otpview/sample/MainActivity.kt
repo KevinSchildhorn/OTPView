@@ -35,5 +35,10 @@ class MainActivity : AppCompatActivity() {
         fill_button.setOnClickListener {
             otp_view.setText("ABCDEF")
         }
+
+        continue_button.setOnClickListener {
+            Toast.makeText(this, otp_view.getStringFromFields(), Toast.LENGTH_LONG).show()
+
+        }
     }
 }

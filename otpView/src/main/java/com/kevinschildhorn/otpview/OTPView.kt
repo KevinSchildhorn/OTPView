@@ -360,7 +360,7 @@ class OTPView @JvmOverloads constructor(
         return true
     }
 
-    private fun getStringFromFields():String {
+    fun getStringFromFields():String {
         var str = ""
         editTexts.forEach {
             str += it.text.firstOrNull()

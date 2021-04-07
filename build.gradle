@@ -26,6 +26,6 @@ task clean(type: Delete) {
 }
 
 project.ext {
-    versionCode = 21
-    versionName = "0.2.1"
+    versionCode = 22
+    versionName = "0.2.2"
 }
