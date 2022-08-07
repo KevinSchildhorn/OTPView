@@ -15,6 +15,7 @@
         android:importantForAutofill="no"
         app:otp_itemCount="6"
         app:otp_showCursor="true"
+        app:otp_underscoreCursor="true"
         app:otp_textSize="24sp"
         app:otp_highlightedTextSize="24sp"
         app:otp_filledTextSize="24sp"

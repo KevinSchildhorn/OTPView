@@ -6,6 +6,8 @@
         <attr name="android:autofillHints"/>
         <attr name="otp_itemCount" format="integer" />
         <attr name="otp_showCursor" format="boolean" />
+        <attr name="otp_underscoreCursor" format="boolean" />
+        <attr name="otp_customCursor" format="reference" />
         <attr name="otp_itemWidth" format="dimension" />
         <attr name="otp_itemHeight" format="dimension" />
         <attr name="otp_cursorColor" format="color" />

@@ -56,45 +56,47 @@ class OTPView @JvmOverloads constructor(
 
     // region values
     // All
-    private val itemCount:Int
-    private val showCursor:Boolean
-    private val inputType:Int
-    private val importantForAutofillLocal:Int
-    private val autofillHints:String?
-    private var itemWidth:Int
-    private var itemHeight:Int
-    private val cursorColor:Int
-    private val allCaps:Boolean
-    private val marginBetween:Int
-    private val isPassword:Boolean
+    private val itemCount: Int
+    private val showCursor: Boolean
+    private val underscoreCursor: Boolean
+    private val customCursorDrawable: Drawable?
+    private val inputType: Int
+    private val importantForAutofillLocal: Int
+    private val autofillHints: String?
+    private var itemWidth: Int
+    private var itemHeight: Int
+    private val cursorColor: Int
+    private val allCaps: Boolean
+    private val marginBetween: Int
+    private val isPassword: Boolean
 
     // Default
 
-    private val textSizeDefault:Int
-    private val textColor:Int
-    private val backgroundImage:Drawable?
-    private val font:Typeface?
+    private val textSizeDefault: Int
+    private val textColor: Int
+    private val backgroundImage: Drawable?
+    private val font: Typeface?
 
     // Highlighted
 
-    private val highlightedTextSize:Int
-    private val highlightedTextColor:Int
-    private val highlightedBackgroundImage:Drawable?
-    private val highlightedFont:Typeface?
+    private val highlightedTextSize: Int
+    private val highlightedTextColor: Int
+    private val highlightedBackgroundImage: Drawable?
+    private val highlightedFont: Typeface?
 
     // Filled
 
-    private val filledTextSize:Int
-    private val filledTextColor:Int
-    private val filledBackgroundImage:Drawable?
-    private val filledFont:Typeface?
+    private val filledTextSize: Int
+    private val filledTextColor: Int
+    private val filledBackgroundImage: Drawable?
+    private val filledFont: Typeface?
 
     // endregion
 
     private var onFinishFunction: ((String) -> Unit) = {}
     private var onCharacterUpdatedFunction: ((Boolean) -> Unit) = {}
 
-    private val editTexts:MutableList<EditText> = mutableListOf()
+    private val editTexts: MutableList<EditText> = mutableListOf()
     private var focusIndex = 0
 
     init {
@@ -105,60 +107,69 @@ class OTPView @JvmOverloads constructor(
             R.styleable.OTPView,
             0, 0
         )
-        .apply {
-            try {
-                itemCount = getInteger(R.styleable.OTPView_otp_itemCount, 1)
-                showCursor = getBoolean(R.styleable.OTPView_otp_showCursor, false)
-                inputType = getInteger(R.styleable.OTPView_android_inputType, 0)
-                importantForAutofillLocal = getInteger(R.styleable.OTPView_android_importantForAutofill, 0)
-                autofillHints = getString(R.styleable.OTPView_android_autofillHints)
-                itemWidth = getDimensionPixelSize(R.styleable.OTPView_otp_itemWidth, 44)
-                itemHeight = getDimensionPixelSize(R.styleable.OTPView_otp_itemHeight, 44)
-                cursorColor = getColor(R.styleable.OTPView_otp_cursorColor, Color.BLACK)
-                allCaps = getBoolean(R.styleable.OTPView_otp_allcaps, false)
-                marginBetween = getDimensionPixelSize(
-                    R.styleable.OTPView_otp_marginBetween,
-                    8.dpTopx
-                )
-                isPassword = getBoolean(R.styleable.OTPView_otp_ispassword, false)
+            .apply {
+                try {
+                    itemCount = getInteger(R.styleable.OTPView_otp_itemCount, 1)
+                    showCursor = getBoolean(R.styleable.OTPView_otp_showCursor, false)
+                    underscoreCursor = getBoolean(R.styleable.OTPView_otp_underscoreCursor, false)
+                    customCursorDrawable = getDrawable(R.styleable.OTPView_otp_customCursor)
+                    inputType = getInteger(R.styleable.OTPView_android_inputType, 0)
+                    importantForAutofillLocal =
+                        getInteger(R.styleable.OTPView_android_importantForAutofill, 0)
+                    autofillHints = getString(R.styleable.OTPView_android_autofillHints)
+                    itemWidth = getDimensionPixelSize(R.styleable.OTPView_otp_itemWidth, 44)
+                    itemHeight = getDimensionPixelSize(R.styleable.OTPView_otp_itemHeight, 44)
+                    cursorColor = getColor(R.styleable.OTPView_otp_cursorColor, Color.BLACK)
+                    allCaps = getBoolean(R.styleable.OTPView_otp_allcaps, false)
+                    marginBetween = getDimensionPixelSize(
+                        R.styleable.OTPView_otp_marginBetween,
+                        8.dpTopx
+                    )
+                    isPassword = getBoolean(R.styleable.OTPView_otp_ispassword, false)
 
-                textSizeDefault = getDimensionPixelSize(R.styleable.OTPView_otp_textSize, 14.dpTopx)
-                textColor = getInteger(R.styleable.OTPView_otp_textColor, Color.BLACK)
-                backgroundImage = getDrawable(R.styleable.OTPView_otp_backgroundImage) ?: customBackground()
-                font = getFont(R.styleable.OTPView_otp_Font)
+                    textSizeDefault =
+                        getDimensionPixelSize(R.styleable.OTPView_otp_textSize, 14.dpTopx)
+                    textColor = getInteger(R.styleable.OTPView_otp_textColor, Color.BLACK)
+                    backgroundImage =
+                        getDrawable(R.styleable.OTPView_otp_backgroundImage) ?: customBackground()
+                    font = getFont(R.styleable.OTPView_otp_Font)
 
-                highlightedTextSize = getDimensionPixelSize(
-                    R.styleable.OTPView_otp_highlightedTextSize,
-                    textSizeDefault
-                )
-                highlightedTextColor = getInteger(
-                    R.styleable.OTPView_otp_highlightedTextColor,
-                    textColor
-                )
-                highlightedBackgroundImage = getDrawable(R.styleable.OTPView_otp_highlightedBackgroundImage) ?: backgroundImage
-                highlightedFont = getFont(R.styleable.OTPView_otp_highlightedFont) ?: font
+                    highlightedTextSize = getDimensionPixelSize(
+                        R.styleable.OTPView_otp_highlightedTextSize,
+                        textSizeDefault
+                    )
+                    highlightedTextColor = getInteger(
+                        R.styleable.OTPView_otp_highlightedTextColor,
+                        textColor
+                    )
+                    highlightedBackgroundImage =
+                        getDrawable(R.styleable.OTPView_otp_highlightedBackgroundImage)
+                            ?: backgroundImage
+                    highlightedFont = getFont(R.styleable.OTPView_otp_highlightedFont) ?: font
 
-                filledTextSize = getDimensionPixelSize(
-                    R.styleable.OTPView_otp_filledTextSize,
-                    textSizeDefault
-                )
-                filledTextColor = getInteger(R.styleable.OTPView_otp_filledTextColor, textColor)
-                filledBackgroundImage = getDrawable(R.styleable.OTPView_otp_filledBackgroundImage) ?: backgroundImage
-                filledFont = getFont(R.styleable.OTPView_otp_filledFont) ?: font
+                    filledTextSize = getDimensionPixelSize(
+                        R.styleable.OTPView_otp_filledTextSize,
+                        textSizeDefault
+                    )
+                    filledTextColor = getInteger(R.styleable.OTPView_otp_filledTextColor, textColor)
+                    filledBackgroundImage =
+                        getDrawable(R.styleable.OTPView_otp_filledBackgroundImage)
+                            ?: backgroundImage
+                    filledFont = getFont(R.styleable.OTPView_otp_filledFont) ?: font
 
-                initEditTexts()
-            } finally {
-                recycle()
+                    initEditTexts()
+                } finally {
+                    recycle()
+                }
             }
-        }
     }
 
-    private var disableEditListener:Boolean = false
+    private var disableEditListener: Boolean = false
 
     // region Init
 
-    private fun initEditTexts(){
-        for(x in 0 until itemCount){
+    private fun initEditTexts() {
+        for (x in 0 until itemCount) {
             addEditText(x)
             addListenerForIndex(x)
         }
@@ -173,9 +184,9 @@ class OTPView @JvmOverloads constructor(
         }, 100)
     }
 
-    private fun addListenerForIndex(index: Int){
+    private fun addListenerForIndex(index: Int) {
         editTexts[index].addTextChangedListener {
-            if(!disableEditListener) {
+            if (!disableEditListener) {
                 when {
                     editTexts[index].text.isEmpty() -> {
                         changeFocus(false)
@@ -191,8 +202,9 @@ class OTPView @JvmOverloads constructor(
             }
         }
         editTexts[index].setOnKeyListener { _, keyCode, event ->
-            if(keyCode == KeyEvent.KEYCODE_DEL &&
-                event.action == KeyEvent.ACTION_DOWN) {
+            if (keyCode == KeyEvent.KEYCODE_DEL &&
+                event.action == KeyEvent.ACTION_DOWN
+            ) {
                 disableEditListener = true
                 editTexts[index].setText("")
                 changeFocus(false)
@@ -201,14 +213,15 @@ class OTPView @JvmOverloads constructor(
                 disableEditListener = false
             }
             if (event.action == KeyEvent.ACTION_DOWN &&
-                keyCode == KeyEvent.KEYCODE_ENTER) {
-                if(isFilled())
+                keyCode == KeyEvent.KEYCODE_ENTER
+            ) {
+                if (isFilled())
                     onFinishFunction(getStringFromFields())
             }
             return@setOnKeyListener false
         }
         editTexts[index].setOnFocusChangeListener { v, hasFocus ->
-            if(hasFocus)
+            if (hasFocus)
                 focusIndex = index
             styleEditTexts()
             v.post(Runnable {
@@ -217,7 +230,7 @@ class OTPView @JvmOverloads constructor(
             })
         }
 
-        if(isPassword) {
+        if (isPassword) {
             editTexts.forEach {
                 it.transformationMethod =
                     AsteriskPasswordTransformationMethod()
@@ -225,8 +238,8 @@ class OTPView @JvmOverloads constructor(
         }
     }
 
-    private fun changeFocus(increment: Boolean){
-        if(increment) focusIndex++ else focusIndex--
+    private fun changeFocus(increment: Boolean) {
+        if (increment) focusIndex++ else focusIndex--
 
         when {
             focusIndex < 0 -> focusIndex = 0
@@ -238,7 +251,7 @@ class OTPView @JvmOverloads constructor(
                     it.clearFocus()
                 }
                 showKeyboard(false, editTexts.last())
-                if(isFilled())
+                if (isFilled())
                     onFinishFunction(getStringFromFields())
             }
         }
@@ -246,12 +259,22 @@ class OTPView @JvmOverloads constructor(
         styleEditTexts()
     }
 
-    private fun addEditText(index: Int){
+    private fun addEditText(index: Int) {
         val et = EditText(context)
 
         // All
 
         et.isCursorVisible = showCursor
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            customCursorDrawable?.let {
+                et.textCursorDrawable = it
+            } ?: kotlin.run {
+                if (underscoreCursor) {
+                    et.textCursorDrawable = resources.getDrawable(R.drawable.underscore)
+                }
+            }
+        }
         et.inputType = inputType
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             et.importantForAutofill = importantForAutofillLocal
@@ -264,7 +287,7 @@ class OTPView @JvmOverloads constructor(
 
         et.isAllCaps = allCaps
 
-        val leftDp = if(index == 0) 8.dpTopx else 0.dpTopx
+        val leftDp = if (index == 0) 8.dpTopx else 0.dpTopx
 
         params.setMargins(
             leftDp,
@@ -280,7 +303,7 @@ class OTPView @JvmOverloads constructor(
         styleDefault(et)
 
         et.setOnFocusChangeListener { _, hasFocus ->
-            if(hasFocus){
+            if (hasFocus) {
                 et.post(Runnable { et.setSelection(0) })
             }
         }
@@ -293,14 +316,14 @@ class OTPView @JvmOverloads constructor(
 
     // region Styling
 
-    private fun styleEditTexts(){
-        for (x in 0 until editTexts.size){
+    private fun styleEditTexts() {
+        for (x in 0 until editTexts.size) {
             var et = editTexts[x]
-            if(x < focusIndex){
+            if (x < focusIndex) {
                 styleFilled(et)
-            }else if(x == focusIndex){
+            } else if (x == focusIndex) {
                 styleHighlighted(et)
-            }else if(x > focusIndex){
+            } else if (x > focusIndex) {
                 styleDefault(et)
             }
         }
@@ -334,7 +357,7 @@ class OTPView @JvmOverloads constructor(
     private val Int.dpTopx: Int
         get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
-    private fun customBackground() : Drawable{
+    private fun customBackground(): Drawable {
         val shape = GradientDrawable()
         shape.shape = GradientDrawable.RECTANGLE
         shape.cornerRadius = 8.dpTopx.toFloat()
@@ -343,29 +366,31 @@ class OTPView @JvmOverloads constructor(
         return shape
     }
 
-    private fun showKeyboard(show: Boolean, editText: EditText){
+    private fun showKeyboard(show: Boolean, editText: EditText) {
 
-        val imm: InputMethodManager? = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        if(show){
+        val imm: InputMethodManager? =
+            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        if (show) {
             imm?.showSoftInput(editText, 0)
-        }else {
+        } else {
             imm?.hideSoftInputFromWindow(editText.applicationWindowToken, 0)
         }
     }
 
-    fun isFilled(): Boolean{
+    fun isFilled(): Boolean {
         editTexts.forEach {
-            if(it.text.isNullOrBlank()) return false
+            if (it.text.isNullOrBlank()) return false
         }
         return true
     }
 
-    fun getStringFromFields():String {
+    fun getStringFromFields(): String {
         var str = ""
         editTexts.forEach {
             str += it.text.firstOrNull()
         }
-        return str
+
+        return if (allCaps) str.toUpperCase() else str
     }
 
     // endregion
@@ -380,20 +405,24 @@ class OTPView @JvmOverloads constructor(
         onCharacterUpdatedFunction = func
     }
 
-    fun setText(str: String){
+    fun setText(str: String) {
+        val customString = str.take(itemCount)
         disableEditListener = true
-        for(x in 0 until editTexts.size){
-            if(x < str.length){
-                editTexts[x].setText(str[x].toString())
-            }else{
+        for (x in 0 until editTexts.size) {
+            if (x < customString.length) {
+                editTexts[x].setText(
+                    if (allCaps) customString[x].toString().toUpperCase()
+                    else customString[x].toString()
+                )
+            } else {
                 editTexts[x].setText("")
             }
         }
-        if(str.count() < editTexts.size){
-            focusIndex = str.count()
+        if (customString.count() < editTexts.size) {
+            focusIndex = customString.count()
             disableEditListener = false
             showKeyboard(true, editTexts[focusIndex])
-        }else{
+        } else {
             editTexts.forEach {
                 it.clearFocus()
             }
@@ -404,9 +433,9 @@ class OTPView @JvmOverloads constructor(
         styleEditTexts()
     }
 
-    fun clearText(showKeyboard: Boolean){
+    fun clearText(showKeyboard: Boolean) {
         disableEditListener = true
-        for(x in 0 until editTexts.size){
+        for (x in 0 until editTexts.size) {
             editTexts[x].setText("")
         }
         focusIndex = 0
@@ -414,9 +443,9 @@ class OTPView @JvmOverloads constructor(
         showKeyboard(showKeyboard, editTexts[focusIndex])
     }
 
-    fun fitToWidth(width:Int){
+    fun fitToWidth(width: Int) {
         val outerMargin = 8.dpTopx
-        var dividedSpace = (width - (outerMargin*2)) / editTexts.size
+        var dividedSpace = (width - (outerMargin * 2)) / editTexts.size
         dividedSpace -= marginBetween
         itemWidth = dividedSpace
         itemHeight = (itemWidth * 1.25f).toInt()
@@ -427,7 +456,7 @@ class OTPView @JvmOverloads constructor(
         )
 
         editTexts.forEachIndexed { index, editText ->
-            val leftDp = if(index == 0) 8.dpTopx else 0.dpTopx
+            val leftDp = if (index == 0) 8.dpTopx else 0.dpTopx
 
             params.setMargins(
                 leftDp,

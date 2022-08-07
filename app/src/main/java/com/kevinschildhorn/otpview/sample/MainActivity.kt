@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         otp_view.fitToWidth(width)
 
         fill_button.setOnClickListener {
-            otp_view.setText("ABCDEF")
+            otp_view.setText("ABCDEF_EXTRA")
         }
 
         continue_button.setOnClickListener {
