@@ -24,6 +24,9 @@
 
 package com.kevinschildhorn.otpview
 
+import android.content.ClipData
+import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
@@ -35,13 +38,11 @@ import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.TypedValue
-import android.view.Gravity
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.addTextChangedListener
 import com.kevinschildhorn.otpview.otpview.R
 import kotlinx.android.synthetic.main.otp_view_layout.view.*
@@ -474,6 +475,22 @@ class OTPView @JvmOverloads constructor(
             it.isEnabled = enabled
         }
     }
+
+    fun copyText() {
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip: ClipData = ClipData.newPlainText("Copied", getStringFromFields())
+        clipboard.setPrimaryClip(clip)
+    }
+
+    fun pasteText() {
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboard.primaryClip?.let {
+            val item = it.getItemAt(0)
+            val pasteData: String = item.text.toString()
+            setText(pasteData)
+        }
+    }
+
     // endregion
 }
 

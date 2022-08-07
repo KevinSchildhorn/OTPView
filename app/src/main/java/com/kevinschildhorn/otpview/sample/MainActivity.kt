@@ -35,6 +35,9 @@ class MainActivity : AppCompatActivity() {
         fill_button.setOnClickListener {
             otp_view.setText("ABCDEF_EXTRA")
         }
+        paste_button.setOnClickListener {
+            otp_view.pasteText()
+        }
 
         continue_button.setOnClickListener {
             Toast.makeText(this, otp_view.getStringFromFields(), Toast.LENGTH_LONG).show()
