@@ -13,6 +13,31 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        initTestingUI()
+        initOTPView()
+    }
+
+    private fun initTestingUI(){
+
+        copy_button.setOnClickListener {
+            otp_view.copyText()
+        }
+        paste_button.setOnClickListener {
+            otp_view.pasteText()
+        }
+        fill_button.setOnClickListener {
+            otp_view.setText("ABCDEF_EXTRA")
+        }
+        clear_button.setOnClickListener {
+            otp_view.clearText(false)
+        }
+        continue_button.setOnClickListener {
+            val text = otp_view.getStringFromFields()
+            Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun initOTPView(){
         otp_view.setOnFinishListener {
             Log.i("MainActivity", it)
             Toast.makeText(this, it, Toast.LENGTH_LONG).show()
@@ -31,17 +56,5 @@ class MainActivity : AppCompatActivity() {
         val width = displayMetrics.widthPixels
 
         otp_view.fitToWidth(width)
-
-        fill_button.setOnClickListener {
-            otp_view.setText("ABCDEF_EXTRA")
-        }
-        paste_button.setOnClickListener {
-            otp_view.pasteText()
-        }
-
-        continue_button.setOnClickListener {
-            Toast.makeText(this, otp_view.getStringFromFields(), Toast.LENGTH_LONG).show()
-
-        }
     }
 }

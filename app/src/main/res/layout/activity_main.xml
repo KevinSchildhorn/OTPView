@@ -6,75 +6,116 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.kevinschildhorn.otpview.OTPView
-        android:id="@+id/otp_view"
+    <LinearLayout
+        android:id="@+id/button_layout_copy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textCapCharacters|textNoSuggestions"
-        android:autofillHints=""
-        android:importantForAutofill="no"
-        app:otp_itemCount="6"
-        app:otp_showCursor="true"
-        app:otp_underscoreCursor="true"
-        app:otp_textSize="24sp"
-        app:otp_highlightedTextSize="24sp"
-        app:otp_filledTextSize="24sp"
-        app:otp_itemWidth="48sp"
-        app:otp_itemHeight="56sp"
-        app:otp_cursorColor="@color/colorPrimary"
-        app:otp_marginBetween="8dp"
-        app:otp_textColor="@color/colorPrimary"
-        app:otp_backgroundImage="@drawable/background"
-        app:otp_filledBackgroundImage="@drawable/background"
-        app:otp_highlightedBackgroundImage="@drawable/background_highlighted"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/fill_button"
+        <Button
+            android:id="@+id/copy_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/copy"
+            app:layout_constraintBottom_toTopOf="@+id/otp_view"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/paste_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/paste"
+            app:layout_constraintBottom_toTopOf="@id/continue_button"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/otp_view" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/button_layout_fill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fill_view"
-        app:layout_constraintBottom_toTopOf="@+id/otp_view"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_layout_copy">
+
+        <Button
+            android:id="@+id/fill_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/fill_view"
+            app:layout_constraintBottom_toTopOf="@+id/otp_view"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/clear_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/clear"
+            app:layout_constraintBottom_toTopOf="@+id/otp_view"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/text_to_copy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/copy_text"
-        app:layout_constraintBottom_toTopOf="@+id/otp_view"
+        android:layout_marginTop="20dp"
+        android:text="@string/you_can_copy"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fill_button"
-        />
+        app:layout_constraintTop_toBottomOf="@id/button_layout_fill" />
 
-    <Button
-        android:id="@+id/paste_button"
+    <com.kevinschildhorn.otpview.OTPView
+        android:id="@+id/otp_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/paste_text"
-        app:layout_constraintTop_toBottomOf="@+id/otp_view"
+        android:layout_marginTop="20dp"
+        android:autofillHints=""
+        android:importantForAutofill="no"
+        android:inputType="textCapCharacters|textNoSuggestions"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/continue_button"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/text_to_copy"
+        app:otp_backgroundImage="@drawable/background"
+        app:otp_cursorColor="@color/colorPrimary"
+        app:otp_filledBackgroundImage="@drawable/background"
+        app:otp_filledTextSize="24sp"
+        app:otp_highlightedBackgroundImage="@drawable/background_highlighted"
+        app:otp_highlightedTextSize="24sp"
+        app:otp_itemCount="6"
+        app:otp_itemHeight="56sp"
+        app:otp_itemWidth="48sp"
+        app:otp_marginBetween="8dp"
+        app:otp_showCursor="true"
+        app:otp_textColor="@color/colorPrimary"
+        app:otp_textSize="24sp"
+        app:otp_underscoreCursor="true" />
 
     <Button
         android:id="@+id/continue_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/continue_text"
+        android:layout_marginTop="20dp"
         android:enabled="false"
-        app:layout_constraintTop_toBottomOf="@+id/otp_view"
+        android:text="@string/continue_text"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/otp_view" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

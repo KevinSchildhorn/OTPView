@@ -2,6 +2,8 @@
     <string name="app_name">OtpView Sample</string>
     <string name="fill_view">Fill View</string>
     <string name="continue_text">Continue</string>
-    <string name="paste_text">Paste</string>
-    <string name="copy_text">You can Copy TEST01 to test paste</string>
+    <string name="copy">Copy from View</string>
+    <string name="paste">Paste to View</string>
+    <string name="clear">Clear View</string>
+    <string name="you_can_copy">You can Copy TEST01 to test paste</string>
 </resources>

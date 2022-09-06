@@ -34,6 +34,8 @@ import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
+import android.text.Editable
+import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.util.DisplayMetrics
@@ -186,22 +188,47 @@ class OTPView @JvmOverloads constructor(
     }
 
     private fun addListenerForIndex(index: Int) {
-        editTexts[index].addTextChangedListener {
-            if (!disableEditListener) {
-                when {
-                    editTexts[index].text.isEmpty() -> {
-                        changeFocus(false)
-                    }
-                    editTexts[index].text.length > 1 -> {
-                        // Only Taking the last char
-                        editTexts[index].setText(it?.first().toString())
-                    }
-                    else -> {
-                        changeFocus(true)
+        editTexts[index].addTextChangedListener(object : TextWatcher {
+
+            var beforeText: String = ""
+            var afterText: String = ""
+
+            val isCopy:Boolean
+                get() = (afterText.count() - beforeText.count()) > 1
+
+            override fun afterTextChanged(s: Editable?) {
+                if (!disableEditListener) {
+                    when {
+                        editTexts[index].text.isEmpty() -> {
+                            changeFocus(false)
+                        }
+                        editTexts[index].text.length > 1 -> {
+
+                            // Only Taking the last char
+                            s?.let {
+                                if (isCopy) {
+                                    setText(it.toString(), index, false)
+                                }
+                                else {
+                                    editTexts[index].setText(it.first().toString())
+                                }
+                            }
+                        }
+                        else -> {
+                            changeFocus(true)
+                        }
                     }
                 }
             }
-        }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                print("Before Text Changed! ${s.toString()} $start $count $after")
+                beforeText = s.toString()
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                print("on Text Changed! ${s.toString()} $start $count $before")
+                afterText = s.toString()
+            }
+        })
         editTexts[index].setOnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_DEL &&
                 event.action == KeyEvent.ACTION_DOWN
@@ -378,6 +405,39 @@ class OTPView @JvmOverloads constructor(
         }
     }
 
+    private fun setText(str: String, index: Int, shouldClearRest: Boolean) {
+        var customString = str.take(itemCount - index)
+        disableEditListener = true
+        for (editTextIndex in index until editTexts.size) {
+            if (customString.length > 0) {
+                editTexts[editTextIndex].setText(
+                    if (allCaps) customString.first().toString().toUpperCase()
+                    else customString.first().toString()
+                )
+                customString = customString.removeRange(0, 1)
+            } else if (shouldClearRest) {
+                editTexts[editTextIndex].setText("")
+            }
+        }
+        if (customString.count() < editTexts.size) {
+            focusIndex = customString.count()
+            disableEditListener = false
+            showKeyboard(true, editTexts[focusIndex])
+        } else {
+            editTexts.forEach {
+                it.clearFocus()
+            }
+            focusIndex = editTexts.size
+            disableEditListener = false
+            showKeyboard(false, editTexts.last())
+        }
+        styleEditTexts()
+    }
+
+    // endregion
+
+    // region Public
+
     fun isFilled(): Boolean {
         editTexts.forEach {
             if (it.text.isNullOrBlank()) return false
@@ -394,10 +454,6 @@ class OTPView @JvmOverloads constructor(
         return if (allCaps) str.toUpperCase() else str
     }
 
-    // endregion
-
-    // region Public
-
     fun setOnFinishListener(func: (String) -> Unit) {
         onFinishFunction = func
     }
@@ -407,31 +463,7 @@ class OTPView @JvmOverloads constructor(
     }
 
     fun setText(str: String) {
-        val customString = str.take(itemCount)
-        disableEditListener = true
-        for (x in 0 until editTexts.size) {
-            if (x < customString.length) {
-                editTexts[x].setText(
-                    if (allCaps) customString[x].toString().toUpperCase()
-                    else customString[x].toString()
-                )
-            } else {
-                editTexts[x].setText("")
-            }
-        }
-        if (customString.count() < editTexts.size) {
-            focusIndex = customString.count()
-            disableEditListener = false
-            showKeyboard(true, editTexts[focusIndex])
-        } else {
-            editTexts.forEach {
-                it.clearFocus()
-            }
-            focusIndex = editTexts.size
-            disableEditListener = false
-            showKeyboard(false, editTexts.last())
-        }
-        styleEditTexts()
+        setText(str, 0, true)
     }
 
     fun clearText(showKeyboard: Boolean) {
